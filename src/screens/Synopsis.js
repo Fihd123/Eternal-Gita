@@ -1,3 +1,4 @@
+import React from 'react';
 import {
   Dimensions,
   StyleSheet,
@@ -5,13 +6,57 @@ import {
   View,
   FlatList,
   TouchableOpacity,
+  useColorScheme,
 } from 'react-native';
-import React from 'react';
 
 const screenWidth = Dimensions.get('screen').width;
 
 const Synopsis = ({navigation}) => {
-  const array = Array.from({length: 35}, (_, index) => ({id: index + 1}));
+  const array = Array.from({length: 18}, (_, index) => ({id: index + 1}));
+  const colorScheme = useColorScheme();
+  const lightMode = colorScheme === 'light';
+  const lightModeColors = {
+    background: '#FFFFFF',
+    text: '#000000',
+  };
+
+  const darkModeColors = {
+    background: '#FFFFFF',
+    text: '#333333',
+  };
+
+  const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      paddingTop: 10,
+      paddingBottom: 10,
+      backgroundColor: '#DFD2B8',
+    },
+    itemContainer: {
+      marginVertical: 15,
+      marginHorizontal: 15,
+      backgroundColor: lightMode
+        ? lightModeColors.background
+        : darkModeColors.background,
+      padding: 20,
+    },
+    title: {
+      fontSize: 14,
+      textAlign: 'center',
+      textTransform: 'uppercase',
+      fontWeight: '600',
+      color: lightMode ? lightModeColors.text : darkModeColors.text,
+    },
+    paragraph: {
+      textAlign: 'center',
+      marginVertical: 10,
+      lineHeight: 28,
+      letterSpacing: 0.12,
+      fontSize: 12,
+      color: lightMode ? lightModeColors.text : darkModeColors.text,
+    },
+  });
+
   const renderItem = ({item}) => {
     return (
       <TouchableOpacity
@@ -20,12 +65,14 @@ const Synopsis = ({navigation}) => {
         <View
           style={{
             justifyContent: 'center',
-            backgroundColor: '#fff',
+            backgroundColor: lightMode
+              ? lightModeColors.background
+              : darkModeColors.background,
             width: screenWidth - 100,
-            // borderRadius: 4,
             padding: 15,
           }}>
-          <Text style={{textAlign: 'center', fontWeight: '600'}}>
+          <Text
+            style={[styles.title, {textAlign: 'center', fontWeight: '600'}]}>
             Chapter - {item.id}
           </Text>
         </View>
@@ -35,25 +82,15 @@ const Synopsis = ({navigation}) => {
 
   return (
     <View style={styles.container}>
-      <View style={{marginBottom: 20}}>
-        <FlatList
-          showsVerticalScrollIndicator={false}
-          data={array}
-          renderItem={renderItem}
-          keyExtractor={item => item.id.toString()}
-          contentContainerStyle={{alignItems: 'center'}}
-        />
-      </View>
+      <FlatList
+        showsVerticalScrollIndicator={false}
+        data={array}
+        renderItem={renderItem}
+        keyExtractor={item => item.id.toString()}
+        contentContainerStyle={{alignItems: 'center'}}
+      />
     </View>
   );
 };
 
 export default Synopsis;
-
-const styles = StyleSheet.create({
-  container: {
-    backgroundColor: '#DFD2B8',
-    flex: 1,
-    alignItems: 'center',
-  },
-});

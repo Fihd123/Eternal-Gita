@@ -6,8 +6,9 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Chapter = ({route}) => {
   const id = route.params;
+
   const defaultSource = {
-    uri: 'https://bhagwad.macrothink.in/public/files/bhagwad-gita/chapter3/eng.pdf',
+    uri: 'https://eternalgurukul.com/public/files/bhagwad-gita/chapter3/eng.pdf',
     cache: true,
   };
 
@@ -27,7 +28,7 @@ const Chapter = ({route}) => {
   const fetchChapters = async () => {
     try {
       const response = await fetch(
-        `https://bhagwad.macrothink.in/public/api/get-questions`,
+        `https://eternalgurukul.com/public/api/get-chapter`,
         {
           method: 'POST',
           headers: {
@@ -64,9 +65,7 @@ const Chapter = ({route}) => {
         trustAllCerts={false}
         source={source ? source : defaultSource}
         onLoadComplete={(numberOfPages, filePath) => {}}
-        onError={error => {
-          console.error('Error loading PDF:', error);
-        }}
+        onError={error => {}}
         style={styles.pdf}
       />
     </View>

@@ -113,7 +113,7 @@ const Drawer = () => {
                   borderRadius: 30,
                   marginRight: 20,
                 }}
-                source={require('../assets/logo.png')}
+                source={require('../assets/logo2.png')}
               />
             </View>
           ),
